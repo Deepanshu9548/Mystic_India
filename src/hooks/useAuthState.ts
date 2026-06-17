@@ -7,26 +7,41 @@ export function useAuthState() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Initialize user state from localStorage
-    const currentUser = authService.getCurrentUser();
-    
-    // Validate token if user exists
-    if (currentUser && !authService.validateToken()) {
-      // Token has expired, attempt to refresh
-      const refreshSuccess = authService.refreshToken();
-      if (!refreshSuccess) {
-        // If refresh fails, log out
+    const initAuth = async () => {
+      // Check for OAuth token in URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const token = urlParams.get('token');
+      
+      if (token) {
+        // We just completed an OAuth flow
+        const success = await authService.handleOAuthCallback(token);
+        if (success) {
+          // Clean up URL
+          window.history.replaceState({}, document.title, window.location.pathname);
+        }
+      }
+
+      // Initialize user state from localStorage
+      const currentUser = authService.getCurrentUser();
+      
+      if (currentUser && authService.validateToken()) {
+        setUser(currentUser); // Optimistic load
+        const result = await authService.fetchCurrentUser();
+        if (result.success && result.user) {
+          setUser(result.user);
+        } else {
+          authService.logout();
+          setUser(null);
+        }
+      } else {
         authService.logout();
         setUser(null);
-      } else {
-        // Get updated user with new token
-        setUser(authService.getCurrentUser());
       }
-    } else {
-      setUser(currentUser);
-    }
-    
-    setLoading(false);
+      
+      setLoading(false);
+    };
+
+    initAuth();
 
     // Set up listener for storage events to sync across tabs
     const handleStorageChange = () => {
@@ -37,10 +52,10 @@ export function useAuthState() {
     window.addEventListener('storage', handleStorageChange);
     
     // Check token validity periodically
-    const tokenValidator = setInterval(() => {
-      if (authService.getCurrentUser() && !authService.validateToken()) {
-        const refreshSuccess = authService.refreshToken();
-        if (!refreshSuccess) {
+    const tokenValidator = setInterval(async () => {
+      if (authService.getCurrentUser() && authService.validateToken()) {
+        const result = await authService.fetchCurrentUser();
+        if (!result.success) {
           authService.logout();
           setUser(null);
         }
@@ -120,10 +135,9 @@ export function useAuthState() {
         ? savedStates.filter((id: string) => id !== stateId)
         : [...savedStates, stateId];
       
-      // Update user profile
+      // Update user profile with only the required fields so the backend can update correctly
       const result = await authService.updateUserProfile({
-        ...user,
-        savedStates: updatedSavedStates,
+        saved_states: updatedSavedStates,
       });
       
       if (result.success && result.user) {

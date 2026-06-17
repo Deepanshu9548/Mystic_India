@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 # Colors for better output
@@ -45,22 +44,36 @@ echo -e "• npm: $(npm -v)"
 echo -e "• OS: $(uname -s)"
 echo ""
 
-# Install dependencies if node_modules doesn't exist
+# Install frontend dependencies if node_modules doesn't exist
 if [ ! -d "node_modules" ]; then
-    echo -e "${YELLOW}Installing dependencies... This might take a minute ⏳${NC}"
+    echo -e "${YELLOW}Installing frontend dependencies... This might take a minute ⏳${NC}"
     npm install
     if [ $? -ne 0 ]; then
-        echo -e "${RED}Failed to install dependencies. Please check your internet connection and try again.${NC}"
+        echo -e "${RED}Failed to install frontend dependencies. Please check your internet connection and try again.${NC}"
         exit 1
     fi
-    echo -e "${GREEN}Dependencies installed successfully! ✅${NC}"
+    echo -e "${GREEN}Frontend dependencies installed successfully! ✅${NC}"
 else
-    echo -e "${GREEN}Dependencies already installed ✅${NC}"
+    echo -e "${GREEN}Frontend dependencies already installed ✅${NC}"
+fi
+
+# Install backend dependencies if node_modules doesn't exist
+if [ ! -d "backend/node_modules" ]; then
+    echo -e "${YELLOW}Installing backend dependencies... This might take a minute ⏳${NC}"
+    cd backend && npm install && cd ..
+    if [ $? -ne 0 ]; then
+        echo -e "${RED}Failed to install backend dependencies. Please check your internet connection and try again.${NC}"
+        exit 1
+    fi
+    echo -e "${GREEN}Backend dependencies installed successfully! ✅${NC}"
+else
+    echo -e "${GREEN}Backend dependencies already installed ✅${NC}"
 fi
 
 # Start the development server
 echo -e "\n${BLUE}Starting Mystic India application...${NC}"
-echo -e "${YELLOW}The app will be available at${NC} ${GREEN}http://localhost:8080/${NC}"
+echo -e "${YELLOW}Frontend will be available at${NC} ${GREEN}http://localhost:8080/${NC}"
+echo -e "${YELLOW}Backend API is running at${NC} ${GREEN}http://localhost:3001/${NC}"
 echo -e "${YELLOW}Press Ctrl+C to stop the server${NC}\n"
 
 npm run dev

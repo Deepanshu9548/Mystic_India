@@ -4,6 +4,9 @@ import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 import axios from 'axios';
+import session from 'express-session';
+import passport from 'passport';
+import authRoutes from './routes/auth';
 
 dotenv.config();
 
@@ -17,6 +20,18 @@ app.use(cors({
   methods: ['GET', 'POST'],
 }));
 app.use(express.json());
+
+// Session and Passport
+app.use(session({
+  secret: process.env.JWT_SECRET || 'fallback_secret_key_for_dev_only',
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Auth routes
+app.use('/api/auth', authRoutes);
 
 // Rate limiting
 const apiLimiter = rateLimit({

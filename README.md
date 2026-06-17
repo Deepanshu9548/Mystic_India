@@ -35,14 +35,19 @@ Discover hidden gems through virtual tours, savor local delicacies, engage with 
 | 🔮 React Three Fiber | 3D graphics and interactive visuals |
 | 📊 Tanstack React Query | Server state management and data fetching |
 | ⚡ Vite | Ultra-fast development server and build tool |
+| 🟢 Node.js + Express | Backend REST API architecture |
+| 🗄️ SQLite | Lightweight local database for secure user persistence |
+| 🛡️ Passport.js + JWT | Secure authentication & Google/GitHub OAuth integrations |
 | 🛠️ ESLint + PostCSS | Code quality and CSS tooling |
 
 ---
 
 ## 📁 Project Structure
 
-```
 Mystic_India/
+├── backend/                   # Express.js REST API server
+│   ├── src/                   # Backend logic (db.ts, index.ts)
+│   └── database.sqlite        # User persistence
 ├── public/                    # Static assets (favicon, images)
 ├── src/
 │   ├── components/
