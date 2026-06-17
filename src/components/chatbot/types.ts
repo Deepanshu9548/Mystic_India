@@ -46,10 +46,10 @@ export interface JourneyDetails {
 }
 
 export const COMMAND_PATTERNS = {
-  JOURNEY_PLAN: /plan\s+(?:a|an)\s+(\d+)(?:\s+|\-)?day(?:s)?\s+(?:journey|trip|vacation|visit|itinerary)\s+(?:to|in|for|at)\s+([A-Za-z\s]+)/i,
-  DAYS_AND_STATE: /(\d+)(?:\s+|\-)?days?\s+(?:in|to|for|at)\s+([A-Za-z\s]+)/i,
+  JOURNEY_PLAN: /plan\s+(?:a|an)\s+(\d+)(?:\s+|-)?day(?:s)?\s+(?:journey|trip|vacation|visit|itinerary)\s+(?:to|in|for|at)\s+([A-Za-z\s]+)/i,
+  DAYS_AND_STATE: /(\d+)(?:\s+|-)?days?\s+(?:in|to|for|at)\s+([A-Za-z\s]+)/i,
   STATE_ONLY: /^(?:visit\s+)?([A-Za-z\s]+)$/i,
-  JUST_DAYS: /^(\d+)(?:\s+|\-)?days?$/i,
+  JUST_DAYS: /^(\d+)(?:\s+|-)?days?$/i,
   FOOD_QUERY: /(?:food|cuisine|dishes|eat|try)\s+(?:in|at|from)?\s+([A-Za-z\s]+)?/i,
   FESTIVAL_QUERY: /(?:festival|celebration|cultural\s+event)s?\s+(?:in|at|of)?\s+([A-Za-z\s]+)?/i,
   WEATHER_QUERY: /(?:weather|climate|temperature|season|rain|monsoon)\s+(?:in|at|of)?\s+([A-Za-z\s]+)?/i,

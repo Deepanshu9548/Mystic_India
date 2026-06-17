@@ -3,7 +3,7 @@ import React from 'react';
 import { Activity, MapPin, Clock } from 'lucide-react';
 
 type JourneyActivitiesProps = {
-  journey: any;
+  journey: { location: string; activities?: { name: string; description: string; duration: string; location: string; image: string; [key: string]: unknown }[]; [key: string]: unknown };
 };
 
 const JourneyActivities: React.FC<JourneyActivitiesProps> = ({ journey }) => {
@@ -38,7 +38,7 @@ const JourneyActivities: React.FC<JourneyActivitiesProps> = ({ journey }) => {
   
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {activities.map((activity: any, index: number) => (
+      {activities.map((activity: { name: string; description: string; duration: string; location: string; image: string; [key: string]: unknown }, index: number) => (
         <div key={index} className="border border-border rounded-lg overflow-hidden flex flex-col h-full">
           <div className="h-48 overflow-hidden">
             <img 

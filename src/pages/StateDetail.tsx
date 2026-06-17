@@ -12,7 +12,7 @@ import LazyImage from '@/components/ui/lazy-image';
 
 const StateDetail = () => {
   const { stateId } = useParams<{ stateId: string }>();
-  const [state, setState] = useState<any | null>(null);
+  const [state, setState] = useState<Record<string, unknown> | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   
   useEffect(() => {
@@ -235,7 +235,7 @@ const StateDetail = () => {
                       <div className="mt-8">
                         <h4 className="text-lg font-medium mb-3">Famous Dishes</h4>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          {state.cuisine.dishes.map((dish: any, index: number) => (
+                          {state.cuisine.dishes.map((dish: { name: string; image?: string; description: string }, index: number) => (
                             <div key={index} className="flex items-start">
                               <div className="w-20 h-20 rounded-md overflow-hidden mr-4 shrink-0">
                                 <LazyImage 
@@ -263,7 +263,7 @@ const StateDetail = () => {
                     
                     {state.festivals?.list && (
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                        {state.festivals.list.map((festival: any, index: number) => (
+                        {state.festivals.list.map((festival: { name: string; timing: string; description: string }, index: number) => (
                           <div key={index} className="bg-white/40 dark:bg-white/10 p-4 rounded-lg backdrop-blur-sm">
                             <h4 className="font-medium mb-2">{festival.name}</h4>
                             <p className="text-sm text-foreground/70 mb-2">{festival.timing}</p>
@@ -282,7 +282,7 @@ const StateDetail = () => {
                     
                     {state.heritage?.sites && (
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-                        {state.heritage.sites.map((site: any, index: number) => (
+                        {state.heritage.sites.map((site: { name: string; image?: string; location: string; description: string }, index: number) => (
                           <div key={index} className="overflow-hidden rounded-lg border border-mystic-100">
                             <div className="h-48">
                               <LazyImage 

@@ -18,7 +18,7 @@ import ContentSkeleton, { CardSkeleton } from '@/components/ui/content-skeleton'
 const AllStates = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeFilter, setActiveFilter] = useState('All');
-  const [filteredStates, setFilteredStates] = useState<any[]>([]);
+  const [filteredStates, setFilteredStates] = useState<Record<string, unknown>[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { user, toggleFavoriteState, isAuthenticated } = useAuth();
   const { toast } = useToast();

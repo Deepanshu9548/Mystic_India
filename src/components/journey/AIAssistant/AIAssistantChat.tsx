@@ -8,8 +8,8 @@ interface AIAssistantChatProps {
   messages: {text: string, sender: 'user' | 'bot'}[];
   isGenerating: boolean;
   setMessages: React.Dispatch<React.SetStateAction<{text: string, sender: 'user' | 'bot'}[]>>;
-  currentJourney: any;
-  onComplete: (journeyData: any) => void;
+  currentJourney: { destination?: string; duration?: number; date?: string; [key: string]: unknown } | null;
+  onComplete: (journeyData: unknown) => void;
   setIsGenerating: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -45,9 +45,10 @@ const AIAssistantChat: React.FC<AIAssistantChatProps> = ({
         }, 1000);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentJourney, isGenerating]);
   
-  const generateItinerary = (days: number, stateInfo: any, timeOfDay: 'morning' | 'afternoon' | 'evening' | 'night' = 'morning') => {
+  const generateItinerary = (days: number, stateInfo: { name: string; id?: string; region?: string; capital?: string; majorCities?: string[]; topAttractions?: string[]; beaches?: string[]; hillStations?: string[]; temples?: string[]; [key: string]: unknown }, timeOfDay: 'morning' | 'afternoon' | 'evening' | 'night' = 'morning') => {
     // Let the user know journey is being generated
     setMessages(prev => [...prev, {
       text: `Generating a ${days}-day journey to ${stateInfo.name}...`,
@@ -70,7 +71,7 @@ const AIAssistantChat: React.FC<AIAssistantChatProps> = ({
     
     const stateId = stateInfo.id || stateInfo.name.toLowerCase().replace(' ', '-');
     const stateArtForms = getArtFormsByState(stateId)
-      .map((art: any) => art.name) || ['Traditional Dance', 'Local Music', 'Folk Arts'];
+      .map((art: { name: string; [key: string]: unknown }) => art.name) || ['Traditional Dance', 'Local Music', 'Folk Arts'];
     
     const itinerary = Array.from({ length: days }, (_, i) => {
       const shuffledPlaces = [...places].sort(() => 0.5 - Math.random()).slice(0, 3);

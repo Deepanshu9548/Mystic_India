@@ -159,10 +159,11 @@ const useImageLazyLoad = (
       }
     }
 
+    const currentRef = imageRef.current;
     return () => {
       didCancel = true;
-      if (observerRef.current && imageRef.current) {
-        observerRef.current.unobserve(imageRef.current);
+      if (observerRef.current && currentRef) {
+        observerRef.current.unobserve(currentRef);
         observerRef.current.disconnect();
       }
     };

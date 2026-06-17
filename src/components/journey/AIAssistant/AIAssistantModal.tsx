@@ -15,8 +15,8 @@ import StateSelector from './StateSelector';
 
 interface AIAssistantModalProps {
   onClose: () => void;
-  onComplete: (journeyData: any) => void;
-  currentJourney: any;
+  onComplete: (journeyData: unknown) => void;
+  currentJourney: { destination?: string; duration?: number; date?: string; [key: string]: unknown } | null;
 }
 
 const AIAssistantModal: React.FC<AIAssistantModalProps> = ({ 
@@ -49,7 +49,7 @@ const AIAssistantModal: React.FC<AIAssistantModalProps> = ({
   };
 
   const processUserRequest = (query: string) => {
-    const journeyRegex = /(\d+)(?:\s+|\-)?days?(?:\s+(?:in|to|for|at))?\s+([A-Za-z\s]+)/i;
+    const journeyRegex = /(\d+)(?:\s+|-)?days?(?:\s+(?:in|to|for|at))?\s+([A-Za-z\s]+)/i;
     const stateOnlyRegex = /^(?:visit\s+)?([A-Za-z\s]+)$/i;
     
     let days: number = currentJourney.duration || 3;
@@ -149,7 +149,7 @@ const AIAssistantModal: React.FC<AIAssistantModalProps> = ({
           </Button>
         </div>
         
-        <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as any)}>
+        <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as 'chat' | 'time' | 'customize' | 'states')}>
           <TabsList className="w-full bg-gray-100 dark:bg-gray-800 p-0 rounded-none">
             <TabsTrigger value="chat" className="flex-1">Chat</TabsTrigger>
             <TabsTrigger value="states" className="flex-1">States</TabsTrigger>

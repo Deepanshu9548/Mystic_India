@@ -1,17 +1,27 @@
-
+/* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useContext } from 'react';
 import { useAuthState } from '@/hooks/useAuthState';
 
+export type User = {
+  id: string;
+  name: string;
+  email: string;
+  favoriteStates?: string[];
+  trips?: unknown[];
+};
+
+export type Trip = Record<string, unknown>;
+
 type AuthContextType = {
-  user: any;
+  user: User | null;
   loading: boolean;
-  login: (email: string, password: string) => Promise<any>;
-  signUp: (name: string, email: string, password: string) => Promise<any>;
-  socialLogin: (provider: 'google' | 'github') => Promise<any>;
-  updateProfile: (userData: any) => Promise<any>;
-  toggleFavoriteState: (stateId: string) => Promise<any>;
-  addTrip: (trip: any) => Promise<any>;
-  deleteTrip: (tripId: number) => Promise<any>;
+  login: (email: string, password: string) => Promise<User | null>;
+  signUp: (name: string, email: string, password: string) => Promise<User | null>;
+  socialLogin: (provider: 'google' | 'github') => Promise<User | null>;
+  updateProfile: (userData: Partial<User>) => Promise<User | null>;
+  toggleFavoriteState: (stateId: string) => Promise<string[]>;
+  addTrip: (trip: Trip) => Promise<Trip[]>;
+  deleteTrip: (tripId: number) => Promise<Trip[]>;
   logout: () => void;
   isAuthenticated: boolean;
 };

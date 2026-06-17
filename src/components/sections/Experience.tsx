@@ -12,7 +12,7 @@ import { useAuth } from '@/context/AuthContext';
 import { useChatbot } from '@/components/chatbot/ChatbotProvider';
 
 const JourneyCard = memo(({ journey, theme, starColor, textAccentColor }: { 
-  journey: any; 
+  journey: { id?: string | number; imageSrc?: string; title?: string; destination?: string; rating?: string; status?: string; description?: string; duration?: string | number; date?: string; location?: string; [key: string]: unknown }; 
   theme: string;
   starColor: string;
   textAccentColor: string;
@@ -83,7 +83,7 @@ const Experience: React.FC = () => {
   const isMobile = useMobile();
   const { user } = useAuth();
   const navigate = useNavigate();
-  const [allJourneys, setAllJourneys] = useState<any[]>([]);
+  const [allJourneys, setAllJourneys] = useState<Record<string, unknown>[]>([]);
   const { openChatbot } = useChatbot();
   
   const starColor = theme === 'dark' ? "#e94cff" : "#ff7e11";
@@ -93,7 +93,7 @@ const Experience: React.FC = () => {
     const combinedJourneys = [...journeys];
     
     if (user && user.trips && user.trips.length > 0) {
-      const userJourneys = user.trips.map((trip: any) => ({
+      const userJourneys = user.trips.map((trip: { id?: number; destination?: string; [key: string]: unknown }) => ({
         ...trip,
         title: trip.destination,
         location: trip.destination,

@@ -1,4 +1,4 @@
-
+/* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 type Theme = 'light' | 'dark';
@@ -62,6 +62,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         initializeVideos();
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [theme]);
 
   // Helper function to initialize videos with proper settings

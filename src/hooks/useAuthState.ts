@@ -3,7 +3,7 @@ import { authService } from '@/lib/auth';
 import { stateData } from '@/data/stateData';
 
 export function useAuthState() {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<Record<string, unknown> | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -92,7 +92,7 @@ export function useAuthState() {
     }
   };
 
-  const updateProfile = async (userData: any) => {
+  const updateProfile = async (userData: Record<string, unknown>) => {
     setLoading(true);
     try {
       const result = await authService.updateUserProfile(userData);
@@ -241,7 +241,7 @@ export function useAuthState() {
     return itinerary;
   };
 
-  const addTrip = async (trip: any) => {
+  const addTrip = async (trip: Record<string, unknown>) => {
     try {
       if (!user) return { success: false, message: "User not authenticated" };
       
@@ -250,7 +250,7 @@ export function useAuthState() {
       
       // Generate a new ID for the trip
       const newTripId = trips.length > 0 
-        ? Math.max(...trips.map((t: any) => t.id)) + 1 
+        ? Math.max(...trips.map((t: { id: number }) => t.id)) + 1 
         : 1;
       
       // Parse the duration if it's a string
@@ -279,7 +279,7 @@ export function useAuthState() {
       }
       
       // Prepare timeline for the journey overview
-      const timeline = trip.timeline || itinerary.map((day: any) => ({
+      const timeline = trip.timeline || itinerary.map((day: { title: string; activities?: string[] }) => ({
         title: day.title,
         description: day.activities?.join(', ') || 'Explore and enjoy'
       }));
@@ -331,14 +331,14 @@ export function useAuthState() {
       const trips = user.trips || [];
       
       // Find the trip to be deleted
-      const tripToDelete = trips.find((t: any) => t.id === tripId);
+      const tripToDelete = trips.find((t: { id: number }) => t.id === tripId);
       
       if (!tripToDelete) {
         return { success: false, message: "Trip not found" };
       }
       
       // Filter out the trip to be deleted
-      const updatedTrips = trips.filter((t: any) => t.id !== tripId);
+      const updatedTrips = trips.filter((t: { id: number }) => t.id !== tripId);
       
       // Update user profile
       const result = await authService.updateUserProfile({

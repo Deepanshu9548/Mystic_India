@@ -16,8 +16,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 
 interface PlannerAIAssistantProps {
   onClose: () => void;
-  onComplete: (journeyData: any) => void;
-  currentJourney: any;
+  onComplete: (journeyData: unknown) => void;
+  currentJourney: { destination?: string; duration?: number; date?: string; [key: string]: unknown } | null;
 }
 
 const PlannerAIAssistant: React.FC<PlannerAIAssistantProps> = ({ 
@@ -52,6 +52,7 @@ const PlannerAIAssistant: React.FC<PlannerAIAssistantProps> = ({
         }, 1000);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentJourney]);
 
   const handleTimeChange = (value: 'morning' | 'afternoon' | 'evening' | 'night') => {
@@ -99,9 +100,9 @@ const PlannerAIAssistant: React.FC<PlannerAIAssistantProps> = ({
   };
 
   const processUserRequest = (query: string) => {
-    const journeyRegex = /(\d+)(?:\s+|\-)?days?(?:\s+(?:in|to|for|at))?\s+([A-Za-z\s]+)/i;
+    const journeyRegex = /(\d+)(?:\s+|-)?days?(?:\s+(?:in|to|for|at))?\s+([A-Za-z\s]+)/i;
     const stateOnlyRegex = /^(?:visit\s+)?([A-Za-z\s]+)$/i;
-    const daysOnlyRegex = /^(\d+)(?:\s+|\-)?days?$/i;
+    const daysOnlyRegex = /^(\d+)(?:\s+|-)?days?$/i;
     
     let days: number = currentJourney.duration || 3;
     let destination: string = selectedState || '';
@@ -144,7 +145,7 @@ const PlannerAIAssistant: React.FC<PlannerAIAssistantProps> = ({
     generateItinerary(days, stateInfo);
   };
 
-  const generateItinerary = (days: number, stateInfo: any, timeOfDayOverride?: 'morning' | 'afternoon' | 'evening' | 'night') => {
+  const generateItinerary = (days: number, stateInfo: { name: string; id?: string; region?: string; capital?: string; majorCities?: string[]; topAttractions?: string[]; beaches?: string[]; hillStations?: string[]; temples?: string[]; [key: string]: unknown }, timeOfDayOverride?: 'morning' | 'afternoon' | 'evening' | 'night') => {
     setTimeout(() => {
       setMessages(prev => [...prev, {
         text: `Generating a ${days}-day journey to ${stateInfo.name}...`,

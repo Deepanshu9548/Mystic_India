@@ -60,7 +60,7 @@ fi
 
 # Start the development server
 echo -e "\n${BLUE}Starting Mystic India application...${NC}"
-echo -e "${YELLOW}The app will be available at${NC} ${GREEN}http://localhost:5173/${NC}"
+echo -e "${YELLOW}The app will be available at${NC} ${GREEN}http://localhost:8080/${NC}"
 echo -e "${YELLOW}Press Ctrl+C to stop the server${NC}\n"
 
 npm run dev

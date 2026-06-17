@@ -5,12 +5,11 @@
 
 // In a real implementation, this would connect to a backend service like Supabase or Firebase
 export const authService = {
-  login: async (email: string, password: string): Promise<{ success: boolean; message: string; user?: any }> => {
+  login: async (email: string, password: string): Promise<{ success: boolean; message: string; user?: Record<string, unknown> }> => {
     try {
       // This is a simulated login flow
       // In a real app, this would make an API call to your authentication service
       
-      console.log("Login attempt with:", { email });
       
       // Simple validation
       if (!email || !password) {
@@ -112,12 +111,11 @@ export const authService = {
     }
   },
   
-  signUp: async (name: string, email: string, password: string): Promise<{ success: boolean; message: string; user?: any }> => {
+  signUp: async (name: string, email: string, password: string): Promise<{ success: boolean; message: string; user?: Record<string, unknown> }> => {
     try {
       // This is a simulated signup flow
       // In a real app, this would make an API call to your authentication service
       
-      console.log("Signup attempt with:", { name, email });
       
       // Simple validation
       if (!name || !email || !password) {
@@ -188,12 +186,11 @@ export const authService = {
     }
   },
   
-  socialLogin: async (provider: 'google' | 'github'): Promise<{ success: boolean; message: string; user?: any }> => {
+  socialLogin: async (provider: 'google' | 'github'): Promise<{ success: boolean; message: string; user?: Record<string, unknown> }> => {
     try {
       // This is a mock implementation for social login
       // In a real implementation, this would integrate with OAuth providers
       
-      console.log(`Social login attempt with ${provider}`);
       
       // Create a random email for demo purposes
       const randomEmail = `user${Math.floor(Math.random() * 1000)}@${provider}.com`;
@@ -248,10 +245,8 @@ export const authService = {
     }
   },
   
-  updateUserProfile: async (userData: any): Promise<{ success: boolean; message: string; user?: any }> => {
+  updateUserProfile: async (userData: Record<string, unknown>): Promise<{ success: boolean; message: string; user?: Record<string, unknown> }> => {
     try {
-      // This would be an API call to update user data in a real app
-      console.log("Updating user profile:", userData);
       
       // Retrieve current user data
       const currentUserJSON = localStorage.getItem('user');

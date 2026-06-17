@@ -70,7 +70,7 @@ export class MultiAIService {
         
         if (this.apiKeys[provider]) {
           try {
-            console.log(`Trying fallback provider: ${provider}`);
+            // Try fallback provider
             return await this.tryProvider(provider, prompt, conversationHistory);
           } catch (fallbackError) {
             console.error(`Error with fallback provider ${provider}:`, fallbackError);

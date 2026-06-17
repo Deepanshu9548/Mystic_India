@@ -73,6 +73,7 @@ const JourneyPlanner = () => {
     }
     
     window.scrollTo(0, 0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, navigate, location.state]);
 
   const addDay = () => {
@@ -120,7 +121,7 @@ const JourneyPlanner = () => {
     });
   };
 
-  const updateDay = (index: number, field: string, value: any) => {
+  const updateDay = (index: number, field: string, value: string | number) => {
     const updatedItinerary = [...journeyData.itinerary];
     updatedItinerary[index] = {
       ...updatedItinerary[index],
@@ -298,7 +299,7 @@ const JourneyPlanner = () => {
     }
   };
 
-  const handleAIComplete = (generatedJourney: any) => {
+  const handleAIComplete = (generatedJourney: Record<string, unknown>) => {
     console.log("AI Generated Journey:", generatedJourney);
     setJourneyData({
       ...journeyData,

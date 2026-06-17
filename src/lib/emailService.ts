@@ -24,8 +24,7 @@ export const emailService = {
   sendContactForm: async (data: ContactFormData): Promise<{ success: boolean; message: string }> => {
     try {
       // Log the submission data
-      console.log("Contact form submission:", data);
-      console.log("This would be sent to: adhirajpundir783@gmail.com, deepanshu95488@gmail.com");
+      // In a real implementation, this would send data to a backend API
       
       // Basic validation
       if (!data.name || !data.email || !data.message) {
@@ -60,54 +59,6 @@ export const emailService = {
         minute: '2-digit'
       });
       
-      // In a real implementation with backend, this would send the email
-      console.log("======= EMAIL CONTENT =======");
-      console.log(`
-        To: adhirajpundir783@gmail.com, deepanshu95488@gmail.com
-        Subject: New Travel Inquiry from ${data.name}
-        
-        ---------- MYSTIC INDIA TRAVEL INQUIRY ----------
-        
-        CONTACT DETAILS:
-        Name: ${data.name}
-        Email: ${data.email}
-        Submitted on: ${formattedDate} at ${formattedTime}
-        
-        TRAVEL DETAILS:
-        Interested Destination: ${destinationInfo}
-        
-        MESSAGE:
-        ${data.message}
-        
-        -------------------------------------------
-        
-        This inquiry was submitted through the Mystic India website contact form.
-        Please respond to the customer within 24 hours.
-      `);
-      console.log("==============================");
-      
-      // Email confirmation to user (in a real implementation)
-      console.log("======= USER CONFIRMATION EMAIL =======");
-      console.log(`
-        To: ${data.email}
-        Subject: We've Received Your Mystic India Travel Inquiry
-        
-        Dear ${data.name},
-        
-        Thank you for your interest in exploring India with us!
-        
-        We have received your inquiry and one of our travel experts will get back to you shortly to discuss your journey to ${destinationInfo}.
-        
-        Here's a summary of your message:
-        
-        ${data.message}
-        
-        If you have any immediate questions, please feel free to call us at +91 63961 44121.
-        
-        Warm regards,
-        The Mystic India Team
-      `);
-      console.log("==============================");
       
       // Store submission in local storage for demo purposes
       // In a real implementation, this would be stored in a database

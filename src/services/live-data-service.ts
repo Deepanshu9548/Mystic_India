@@ -4,7 +4,7 @@
 type LiveDataCategory = 'weather' | 'news' | 'tourism' | 'currency';
 
 interface LiveDataResponse {
-  data: any;
+  data: unknown;
   source: string;
   timestamp: number;
   success: boolean;
@@ -13,7 +13,7 @@ interface LiveDataResponse {
 
 class LiveDataService {
   private cacheTime = 60 * 60 * 1000; // 1 hour cache
-  private cache: Record<string, { data: any; timestamp: number }> = {};
+  private cache: Record<string, { data: unknown; timestamp: number }> = {};
 
   // Get current weather for a location in India
   async getWeather(location: string): Promise<LiveDataResponse> {
@@ -30,11 +30,8 @@ class LiveDataService {
     }
     
     try {
-      // OpenWeatherMap API (free tier)
-      const apiKey = "4da2a91c693a43c6ea0a36eb6fb6288e"; // Free API key with limited usage
-      const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${location},in&appid=${apiKey}&units=metric`
-      );
+      // Call our backend BFF endpoint instead of the direct OpenWeatherMap API
+      const response = await fetch(`/api/weather?location=${encodeURIComponent(location)}`);
       
       if (!response.ok) {
         throw new Error(`Weather API error: ${response.statusText}`);
@@ -50,18 +47,18 @@ class LiveDataService {
       
       return {
         data,
-        source: "OpenWeatherMap API",
+        source: "OpenWeatherMap API via BFF",
         timestamp: Date.now(),
         success: true
       };
-    } catch (error) {
+    } catch (error: unknown) {
       console.error("Error fetching weather data:", error);
       return {
         data: null,
-        source: "OpenWeatherMap API",
+        source: "OpenWeatherMap API via BFF",
         timestamp: Date.now(),
         success: false,
-        error: error.message
+        error: error instanceof Error ? error.message : String(error)
       };
     }
   }
@@ -81,11 +78,8 @@ class LiveDataService {
     }
     
     try {
-      // NewsAPI (free tier)
-      const apiKey = "67e9fe16ee3345f29d114259586127f8"; // Free API key with limited usage
-      const response = await fetch(
-        `https://newsapi.org/v2/top-headlines?country=in&apiKey=${apiKey}`
-      );
+      // Call our backend BFF endpoint instead of the direct NewsAPI
+      const response = await fetch(`/api/news`);
       
       if (!response.ok) {
         throw new Error(`News API error: ${response.statusText}`);
@@ -101,18 +95,18 @@ class LiveDataService {
       
       return {
         data,
-        source: "NewsAPI",
+        source: "NewsAPI via BFF",
         timestamp: Date.now(),
         success: true
       };
-    } catch (error) {
+    } catch (error: unknown) {
       console.error("Error fetching news data:", error);
       return {
         data: null,
-        source: "NewsAPI",
+        source: "NewsAPI via BFF",
         timestamp: Date.now(),
         success: false,
-        error: error.message
+        error: error instanceof Error ? error.message : String(error)
       };
     }
   }
@@ -206,37 +200,41 @@ class LiveDataService {
         timestamp: Date.now(),
         success: true
       };
-    } catch (error) {
+    } catch (error: unknown) {
       console.error("Error fetching currency data:", error);
       return {
         data: null,
         source: "ExchangeRate API",
         timestamp: Date.now(),
         success: false,
-        error: error.message
+        error: error instanceof Error ? error.message : String(error)
       };
     }
   }
 
   // Format weather data into a readable response
-  formatWeatherResponse(weatherData: any): string {
+  formatWeatherResponse(weatherData: Record<string, unknown> | null): string {
     if (!weatherData || !weatherData.main) {
       return "Weather information is currently unavailable.";
     }
     
-    const temp = weatherData.main.temp;
-    const feels_like = weatherData.main.feels_like;
-    const description = weatherData.weather[0].description;
-    const humidity = weatherData.main.humidity;
-    const windSpeed = weatherData.wind.speed;
-    const cityName = weatherData.name;
+    const main = weatherData.main as Record<string, number>;
+    const weather = (weatherData.weather as Record<string, string>[])[0];
+    const wind = weatherData.wind as Record<string, number>;
+    
+    const temp = main.temp;
+    const feels_like = main.feels_like;
+    const description = weather.description;
+    const humidity = main.humidity;
+    const windSpeed = wind.speed;
+    const cityName = weatherData.name as string;
     
     return `Current weather in ${cityName}: ${description}, temperature is ${temp}°C (feels like ${feels_like}°C), humidity ${humidity}%, wind speed ${windSpeed} m/s.`;
   }
   
   // Format news data into a readable response
-  formatNewsResponse(newsData: any): string {
-    if (!newsData || !newsData.articles || newsData.articles.length === 0) {
+  formatNewsResponse(newsData: Record<string, unknown> | null): string {
+    if (!newsData || !newsData.articles || !Array.isArray(newsData.articles) || newsData.articles.length === 0) {
       return "News information is currently unavailable.";
     }
     
@@ -244,7 +242,7 @@ class LiveDataService {
     const topNews = newsData.articles.slice(0, 3);
     
     let response = "Latest news from India:\n\n";
-    topNews.forEach((article: any, index: number) => {
+    topNews.forEach((article: Record<string, string>, index: number) => {
       response += `${index + 1}. ${article.title}\n`;
     });
     
@@ -252,7 +250,7 @@ class LiveDataService {
   }
   
   // Format tourism data into a readable response
-  formatTourismResponse(tourismData: any): string {
+  formatTourismResponse(tourismData: Record<string, unknown> | null): string {
     if (!tourismData) {
       return "Tourism information is currently unavailable.";
     }
@@ -262,12 +260,14 @@ class LiveDataService {
     response += `Visa: ${tourismData.visaInfo}\n\n`;
     response += "Top destinations by visitor numbers:\n";
     
-    tourismData.popularDestinations.forEach((dest: any, index: number) => {
+    const destinations = tourismData.popularDestinations as Record<string, string>[];
+    destinations.forEach((dest: Record<string, string>, index: number) => {
       response += `${index + 1}. ${dest.name} (${dest.visitors})\n`;
     });
     
     response += "\nTravel advisories:\n";
-    tourismData.travelAdvisories.forEach((advisory: string, index: number) => {
+    const advisories = tourismData.travelAdvisories as string[];
+    advisories.forEach((advisory: string) => {
       response += `• ${advisory}\n`;
     });
     
@@ -275,7 +275,7 @@ class LiveDataService {
   }
   
   // Format currency data into a readable response
-  formatCurrencyResponse(currencyData: any): string {
+  formatCurrencyResponse(currencyData: Record<string, unknown> | null): string {
     if (!currencyData || !currencyData.rates) {
       return "Currency information is currently unavailable.";
     }
@@ -285,10 +285,11 @@ class LiveDataService {
     
     let response = `Current exchange rates for Indian Rupee (INR):\n\n`;
     
+    const rates = currencyData.rates as Record<string, number>;
     majorCurrencies.forEach(currency => {
-      if (currencyData.rates[currency]) {
+      if (rates[currency]) {
         // Since we get INR as base, we need to take reciprocal for the usual representation
-        const rate = (1 / currencyData.rates[currency]).toFixed(2);
+        const rate = (1 / rates[currency]).toFixed(2);
         response += `1 ${currency} = ${rate} INR\n`;
       }
     });

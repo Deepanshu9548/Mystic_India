@@ -1,8 +1,8 @@
 
 import { OpenAIConfig } from '@/components/chatbot/types';
 
-// Default API key (you'll replace this later)
-const DEFAULT_API_KEY = "sk-placeholder-key-replace-with-real-key-later";
+// API key must be provided via configuration — never hardcode keys
+const DEFAULT_API_KEY = "";
 
 export class OpenAIService {
   private apiKey: string;
@@ -21,42 +21,30 @@ export class OpenAIService {
 
   async generateResponse(prompt: string, conversationHistory: {role: string, content: string}[] = []): Promise<string> {
     try {
-      const headers = {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${this.apiKey}`
-      };
-
-      if (this.organization) {
-        headers["OpenAI-Organization"] = this.organization;
-      }
-
-      const messages = [
-        { role: "system", content: "You are a knowledgeable AI assistant focused on Indian culture, geography, travel, and heritage. You know the capital cities, important landmarks, historical facts, festivals, cuisine, and cultural aspects about all Indian states and union territories. Provide detailed information about India's geography, history, arts, sports, wildlife, economy, and travel tips. When asked about current information like weather, news, or events, mention that you can pull live data for the most accurate information. Keep responses concise but informative." },
-        ...conversationHistory,
-        { role: "user", content: prompt }
-      ];
-
-      const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      const response = await fetch("/api/chat", {
         method: "POST",
-        headers,
+        headers: {
+          "Content-Type": "application/json"
+        },
         body: JSON.stringify({
+          prompt,
+          conversationHistory,
           model: this.model,
-          messages,
           temperature: this.temperature,
-          max_tokens: this.maxTokens
+          maxTokens: this.maxTokens
         })
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        console.error("OpenAI API error:", errorData);
-        throw new Error(`OpenAI API error: ${errorData.error?.message || response.statusText}`);
+        console.error("Chat API error:", errorData);
+        throw new Error(`Chat API error: ${errorData.error || response.statusText}`);
       }
 
       const data = await response.json();
       return data.choices[0].message.content;
     } catch (error) {
-      console.error("Error calling OpenAI API:", error);
+      console.error("Error calling Chat API:", error);
       throw error;
     }
   }

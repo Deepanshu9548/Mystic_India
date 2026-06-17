@@ -10,8 +10,8 @@ import { motion } from 'framer-motion';
 interface AIAssistantTimeOptionsProps {
   selectedTimeOfDay: 'morning' | 'afternoon' | 'evening' | 'night';
   setSelectedTimeOfDay: React.Dispatch<React.SetStateAction<'morning' | 'afternoon' | 'evening' | 'night'>>;
-  currentJourney: any;
-  onComplete: (journeyData: any) => void;
+  currentJourney: { destination?: string; itinerary?: { activities: string[]; morningActivities?: string[]; afternoonActivities?: string[]; eveningActivities?: string[]; nightActivities?: string[]; [key: string]: unknown }[]; [key: string]: unknown } | null;
+  onComplete: (journeyData: unknown) => void;
 }
 
 const AIAssistantTimeOptions: React.FC<AIAssistantTimeOptionsProps> = ({
@@ -36,7 +36,7 @@ const AIAssistantTimeOptions: React.FC<AIAssistantTimeOptionsProps> = ({
         
         // Update the itinerary with the new time preference
         if (currentJourney.itinerary) {
-          const updatedItinerary = currentJourney.itinerary.map((day: any) => ({
+          const updatedItinerary = currentJourney.itinerary.map((day: { activities: string[]; morningActivities?: string[]; afternoonActivities?: string[]; eveningActivities?: string[]; nightActivities?: string[]; [key: string]: unknown }) => ({
             ...day,
             timeOfDay: value,
             activities: day[`${value}Activities`] || day.activities

@@ -3,7 +3,7 @@ import React from 'react';
 import { Clock } from 'lucide-react';
 
 type JourneyTimelineProps = {
-  journey: any;
+  journey: { duration: string; timeline?: { title?: string; description?: string; [key: string]: unknown }[]; location: string; [key: string]: unknown };
 };
 
 const JourneyTimeline: React.FC<JourneyTimelineProps> = ({ journey }) => {

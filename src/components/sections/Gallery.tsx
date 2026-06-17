@@ -15,49 +15,49 @@ type ImageType = {
   location: string;
 };
 
+const images: ImageType[] = [
+  {
+    id: 1,
+    url: "https://previews.123rf.com/images/realityimages/realityimages1801/realityimages180100012/92968704-carvings-on-wall-veeranarayana-temple-chennakeshava-temple-complex-belur-karnataka-india.jpg",
+    alt: "Ancient Indian temple with intricate carvings",
+    location: "Karnataka",
+  },
+  {
+    id: 2,
+    url: "https://plus.unsplash.com/premium_photo-1664304095595-e428558e8161?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aG9saXxlbnwwfHwwfHx8MQ%3D%3D",
+    alt: "Colorful Holi festival celebration",
+    location: "Uttar Pradesh",
+  },
+  {
+    id: 3,
+    url: "https://serenademagazine.com/content/images/size/w1200/wp-content/uploads/2023/07/dvhb-9-w4aagpxc.webp",
+    alt: "Traditional Kathakali dancer with elaborate makeup",
+    location: "Kerala",
+  },
+  {
+    id: 4,
+    url: "https://www.agoda.com/wp-content/uploads/2024/03/Taj-Mahal-at-sunset-Agra-India.jpg",
+    alt: "Majestic Taj Mahal at sunrise",
+    location: "Agra",
+  },
+  {
+    id: 5,
+    url: "https://www.shaadidukaan.com/vogue/wp-content/uploads/2019/07/rajasthani-wedding.jpg",
+    alt: "Traditional Indian wedding ceremony",
+    location: "Rajasthan",
+  },
+  {
+    id: 6,
+    url: "https://www.skywaytour.com/media/gallery/2023-09-26-09-33-42-keralabackwaters.jpg",
+    alt: "Boat riding through Kerala's backwaters",
+    location: "Kerala",
+  },
+];
+
 const Gallery: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<ImageType | null>(null);
   const { theme } = useTheme();
   const isMobile = useMobile();
-
-  const images: ImageType[] = [
-    {
-      id: 1,
-      url: "https://previews.123rf.com/images/realityimages/realityimages1801/realityimages180100012/92968704-carvings-on-wall-veeranarayana-temple-chennakeshava-temple-complex-belur-karnataka-india.jpg",
-      alt: "Ancient Indian temple with intricate carvings",
-      location: "Karnataka",
-    },
-    {
-      id: 2,
-      url: "https://plus.unsplash.com/premium_photo-1664304095595-e428558e8161?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aG9saXxlbnwwfHwwfHx8MQ%3D%3D",
-      alt: "Colorful Holi festival celebration",
-      location: "Uttar Pradesh",
-    },
-    {
-      id: 3,
-      url: "https://serenademagazine.com/content/images/size/w1200/wp-content/uploads/2023/07/dvhb-9-w4aagpxc.webp",
-      alt: "Traditional Kathakali dancer with elaborate makeup",
-      location: "Kerala",
-    },
-    {
-      id: 4,
-      url: "https://www.agoda.com/wp-content/uploads/2024/03/Taj-Mahal-at-sunset-Agra-India.jpg",
-      alt: "Majestic Taj Mahal at sunrise",
-      location: "Agra",
-    },
-    {
-      id: 5,
-      url: "https://www.shaadidukaan.com/vogue/wp-content/uploads/2019/07/rajasthani-wedding.jpg",
-      alt: "Traditional Indian wedding ceremony",
-      location: "Rajasthan",
-    },
-    {
-      id: 6,
-      url: "https://www.skywaytour.com/media/gallery/2023-09-26-09-33-42-keralabackwaters.jpg",
-      alt: "Boat riding through Kerala's backwaters",
-      location: "Kerala",
-    },
-  ];
 
   const openLightbox = useCallback((image: ImageType) => {
     setSelectedImage(image);
@@ -82,7 +82,7 @@ const Gallery: React.FC = () => {
     }
     
     setSelectedImage(images[newIndex]);
-  }, [selectedImage, images]);
+  }, [selectedImage]);
 
   const downloadImage = useCallback((url: string, filename: string) => {
     const link = document.createElement('a');

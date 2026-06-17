@@ -168,7 +168,7 @@ const Profile = () => {
             
             {user.trips && user.trips.length > 0 ? (
               <div className="space-y-4">
-                {user.trips.map((trip: any) => (
+                {user.trips.map((trip: { id: number; destination: string; imageSrc?: string; status: string; date: string; [key: string]: unknown }) => (
                   <motion.div
                     key={trip.id}
                     whileHover={{ scale: 1.02 }}
@@ -316,7 +316,7 @@ const Profile = () => {
               
               {recentActivities.length > 0 ? (
                 <div className="space-y-4">
-                  {recentActivities.map((activity: any) => (
+                  {recentActivities.map((activity: { id: number; type: string; description: string; date: string; [key: string]: unknown }) => (
                     <div key={activity.id} className="flex items-start space-x-3">
                       <div className="h-8 w-8 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-0.5">
                         {activity.type === 'login' && <UserCircle className="h-4 w-4 text-primary" />}

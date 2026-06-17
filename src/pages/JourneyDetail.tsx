@@ -18,7 +18,7 @@ import { stateData } from '@/data/stateData';
 
 const JourneyDetail = () => {
   const { journeyId } = useParams<{ journeyId: string }>();
-  const [journey, setJourney] = useState<any | null>(null);
+  const [journey, setJourney] = useState<Record<string, unknown> | null>(null);
   const { user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -28,7 +28,7 @@ const JourneyDetail = () => {
     
     // First try to find journey in user trips
     if (journeyId && user && user.trips) {
-      const userJourney = user.trips.find((trip: any) => trip.id === parseInt(journeyId));
+      const userJourney = user.trips.find((trip: { id?: number | string; [key: string]: unknown }) => trip.id === parseInt(journeyId));
       if (userJourney) {
         // If we found a user journey, use it
         setJourney({
@@ -72,7 +72,7 @@ const JourneyDetail = () => {
   const stateInfo = getStateInfo();
 
   // If this is a user-created journey, use enhanced JourneyViewer component
-  if (user && user.trips && user.trips.find((trip: any) => trip.id === parseInt(journeyId || '0'))) {
+  if (user && user.trips && user.trips.find((trip: { id?: number | string; [key: string]: unknown }) => trip.id === parseInt(journeyId || '0'))) {
     return (
       <>
         <Navbar />

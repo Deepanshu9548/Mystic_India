@@ -10,7 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { toast } from "@/components/ui/use-toast";
 
 type CabBookingProps = {
-  journey: any;
+  journey: { title?: string; duration?: string; location?: string; [key: string]: unknown };
 };
 
 const CabBooking: React.FC<CabBookingProps> = ({ journey }) => {

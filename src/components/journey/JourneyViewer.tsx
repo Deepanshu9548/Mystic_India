@@ -6,7 +6,28 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { rubikRotate, fadeIn } from '@/lib/animations';
 
 interface JourneyViewerProps {
-  journey: any;
+  journey: { 
+    title?: string;
+    destination?: string;
+    date?: string;
+    duration?: string | number;
+    status?: string;
+    imageSrc?: string;
+    itinerary?: {
+      title?: string;
+      day?: number;
+      timeOfDay?: string;
+      morningActivities?: string[];
+      afternoonActivities?: string[];
+      eveningActivities?: string[];
+      nightActivities?: string[];
+      places?: string[];
+      cuisine?: string[];
+      artForms?: string[];
+      [key: string]: unknown;
+    }[];
+    [key: string]: unknown;
+  };
   enhanced?: boolean;
 }
 
@@ -106,7 +127,7 @@ const JourneyViewer: React.FC<JourneyViewerProps> = ({ journey, enhanced = false
               <h3 className="font-semibold mb-3 text-lg">Journey Highlights</h3>
               {journey.itinerary && journey.itinerary.length > 0 ? (
                 <ul className="space-y-2">
-                  {journey.itinerary.slice(0, 3).map((day: any, idx: number) => (
+                  {journey.itinerary.slice(0, 3).map((day: { title?: string; [key: string]: unknown }, idx: number) => (
                     <li key={idx} className="text-sm text-muted-foreground">
                       • {day.title}
                     </li>
@@ -132,7 +153,7 @@ const JourneyViewer: React.FC<JourneyViewerProps> = ({ journey, enhanced = false
           Day by Day Itinerary
         </h2>
         
-        {journey.itinerary && journey.itinerary.map((day: any, index: number) => (
+        {journey.itinerary && journey.itinerary.map((day: { title?: string; day?: number; timeOfDay?: string; morningActivities?: string[]; afternoonActivities?: string[]; eveningActivities?: string[]; nightActivities?: string[]; places?: string[]; cuisine?: string[]; artForms?: string[]; [key: string]: unknown }, index: number) => (
           <motion.div 
             key={index}
             variants={item}

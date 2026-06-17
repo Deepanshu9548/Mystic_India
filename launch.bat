@@ -48,7 +48,7 @@ if not exist "node_modules\" (
 :: Start the development server
 echo.
 echo Starting Mystic India application...
-echo The app will be available at http://localhost:5173/
+echo The app will be available at http://localhost:8080/
 echo Press Ctrl+C to stop the server
 echo.
 
