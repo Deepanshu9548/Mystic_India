@@ -1,0 +1,208 @@
+
+/* Optimized CSS for better rendering performance */
+
+/* Optimize animations */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Prioritize GPU rendering for smoother animations */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+.will-change-scroll {
+  will-change: scroll-position;
+}
+
+/* Hardware acceleration classes */
+.hardware-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Mobile optimizations */
+.mobile-optimized-container {
+  contain: content;
+  content-visibility: auto;
+  contain-intrinsic-size: 0 500px;
+}
+
+.mobile-card {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 300px;
+}
+
+/* Optimize image rendering */
+.img-rendering-optimized {
+  image-rendering: optimizeSpeed;
+}
+
+/* Prevent layout shifts */
+.content-visibility-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 500px;
+}
+
+/* High priority loading for homepage */
+[data-priority="high"] {
+  content-visibility: visible;
+}
+
+/* Optimize scrollbar styling */
+.optimized-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(155, 155, 155, 0.5) transparent;
+}
+
+.optimized-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.optimized-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.optimized-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(155, 155, 155, 0.5);
+  border-radius: 6px;
+}
+
+/* Hide scrollbars but keep functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Optimize for mobile views */
+@media (max-width: 768px) {
+  .mobile-optimized {
+    contain: content;
+    content-visibility: auto;
+  }
+
+  /* Mobile snap scrolling */
+  .mobile-snap-container {
+    scroll-snap-type: y mandatory;
+    height: 100vh;
+    overflow-y: auto;
+  }
+
+  .mobile-snap-item {
+    scroll-snap-align: start;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Mobile horizontal snap scrolling */
+  .mobile-snap-x-container {
+    scroll-snap-type: x mandatory;
+    overflow-x: auto;
+    display: flex;
+    width: 100%;
+  }
+  
+  .mobile-snap-x-item {
+    scroll-snap-align: center;
+    flex: 0 0 90%;
+    width: 90%;
+  }
+}
+
+/* General performance optimizations */
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+/* Optimize text rendering */
+.text-rendering-optimized {
+  text-rendering: optimizeSpeed;
+}
+
+/* Optimize animations by using transform instead of top/left */
+.transform-optimize {
+  transform: translate3d(0, 0, 0);
+}
+
+/* Progressive image loading - skipped for home page */
+.progressive-img-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.progressive-img-placeholder {
+  filter: blur(10px);
+  transform: scale(1.05);
+  transition: opacity 400ms ease-in-out;
+}
+
+.progressive-img-full {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 400ms ease-in-out;
+}
+
+.progressive-img-loaded .progressive-img-full {
+  opacity: 1;
+}
+
+.progressive-img-loaded .progressive-img-placeholder {
+  opacity: 0;
+}
+
+/* Mobile view image sizes */
+@media (max-width: 768px) {
+  .mobile-image-size {
+    max-height: 200px;
+    object-fit: cover;
+  }
+  
+  .mobile-card-height {
+    max-height: 350px;
+  }
+}
+
+/* Blur-up image loading animation - skipped for home page */
+@keyframes blurUp {
+  0% {
+    filter: blur(20px);
+    transform: scale(1.05);
+  }
+  100% {
+    filter: blur(0);
+    transform: scale(1);
+  }
+}
+
+.blur-up-animation {
+  animation: blurUp 0.4s ease-out forwards;
+}
+
+/* Reduced motion preference - for home page animations */
+@media (prefers-reduced-motion: no-preference) {
+  .home-animation {
+    transition-property: opacity, transform;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+}

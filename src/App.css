@@ -1,0 +1,257 @@
+
+/* Base styles that will apply to both light and dark mode */
+#root {
+  width: 100%;
+  text-align: center;
+}
+
+/* Light/Dark mode transition */
+body {
+  transition: background-color 0.5s ease, color 0.3s ease;
+}
+
+/* Enhanced card styles */
+.card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.dark .card-hover:hover {
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+}
+
+/* Enhanced image hover effects */
+.img-hover-zoom {
+  overflow: hidden;
+}
+
+.img-hover-zoom img {
+  transition: transform 0.5s ease;
+}
+
+.img-hover-zoom:hover img {
+  transform: scale(1.1);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Custom scrollbar for light/dark modes */
+body::-webkit-scrollbar {
+  width: 10px;
+}
+
+.light body::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.light body::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+}
+
+.dark body::-webkit-scrollbar-track {
+  background: #0a0920;
+}
+
+.dark body::-webkit-scrollbar-thumb {
+  background-color: #e94cff;
+  border-radius: 10px;
+}
+
+/* Focus styles for better accessibility */
+*:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Dark mode specific styles - dark theme */
+.dark body {
+  background-color: #0a0920;
+  color: #f8f9fc;
+}
+
+.dark .glass-card {
+  background: rgba(42, 16, 80, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(233, 76, 255, 0.2);
+}
+
+.dark .card {
+  border-color: rgba(233, 76, 255, 0.3);
+}
+
+.dark .highlight-text {
+  color: #e94cff;
+}
+
+/* State cards hover effect specific to dark mode */
+.dark .state-card:hover {
+  box-shadow: 0 0 15px rgba(233, 76, 255, 0.3);
+  border-color: rgba(233, 76, 255, 0.5);
+}
+
+/* Blue/Purple accent for dark mode buttons */
+.dark .btn-accent {
+  background-color: #7030a0;
+  color: white;
+}
+
+.dark .btn-accent:hover {
+  background-color: #9030d0;
+}
+
+/* Dark mode text and background improvements */
+.dark .text-on-dark {
+  color: #f8f9fc;
+}
+
+.dark .bg-card-dark {
+  background-color: rgba(42, 16, 80, 0.7);
+}
+
+.dark .border-accent {
+  border-color: #7030a0;
+}
+
+/* Gradient elements for dark mode */
+.dark .gradient-border {
+  border-image: linear-gradient(to right, #7030a0, #e94cff) 1;
+}
+
+.dark .gradient-text {
+  background: linear-gradient(to right, #e94cff, #53a6ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Improved contrast for dark mode text */
+.dark .muted-dark {
+  color: #b990ff;
+}
+
+/* Dark mode form elements */
+.dark input, 
+.dark textarea, 
+.dark select {
+  background-color: rgba(42, 16, 80, 0.7);
+  border-color: rgba(233, 76, 255, 0.3);
+  color: #f8f9fc;
+}
+
+.dark input::placeholder, 
+.dark textarea::placeholder {
+  color: #a29db1;
+}
+
+.dark input:focus, 
+.dark textarea:focus, 
+.dark select:focus {
+  border-color: #e94cff;
+  box-shadow: 0 0 0 2px rgba(233, 76, 255, 0.2);
+}
+
+/* Dark mode specific elements for the signature journeys, reviews, and gallery */
+.dark .experience-card {
+  background: rgba(42, 16, 80, 0.6);
+  border: 1px solid rgba(233, 76, 255, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.dark .review-card {
+  background: rgba(42, 16, 80, 0.6);
+  border: 1px solid rgba(83, 166, 255, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.dark .gallery-card {
+  background: rgba(42, 16, 80, 0.6);
+  border: 1px solid rgba(233, 76, 255, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.dark .btn-primary {
+  background: linear-gradient(45deg, #7030a0, #e94cff);
+  border: none;
+  color: white;
+  box-shadow: 0 4px 10px rgba(233, 76, 255, 0.3);
+}
+
+.dark .btn-primary:hover {
+  background: linear-gradient(45deg, #8040b0, #f066ff);
+  box-shadow: 0 6px 14px rgba(233, 76, 255, 0.4);
+}
+
+.dark .section-title::after {
+  background: linear-gradient(to right, #e94cff, #53a6ff);
+}
+
+.dark .subtitle {
+  color: #53a6ff;
+}
+
+/* Light-dark specific section backgrounds */
+.light .section-experience {
+  background: linear-gradient(to bottom, #ffffff, #f5f0e6);
+}
+
+.dark .section-experience {
+  background: linear-gradient(135deg, rgba(10, 9, 32, 0.8) 0%, rgba(43, 14, 62, 0.8) 100%);
+  backdrop-filter: blur(5px);
+}
+
+.light .section-reviews {
+  background: linear-gradient(to bottom, #ffffff, #e6f0f5);
+}
+
+.dark .section-reviews {
+  background: linear-gradient(135deg, rgba(26, 18, 88, 0.8) 0%, rgba(10, 9, 32, 0.8) 100%);
+  backdrop-filter: blur(5px);
+}
+
+.light .section-gallery {
+  background: linear-gradient(to bottom, #f0f0f0, #ffffff);
+}
+
+.dark .section-gallery {
+  background: linear-gradient(135deg, rgba(43, 14, 62, 0.8) 0%, rgba(26, 18, 88, 0.8) 100%);
+  backdrop-filter: blur(5px);
+}
+
+/* Video background fixes */
+video {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.dark .video-overlay {
+  background-color: rgba(10, 9, 32, 0.5);
+}

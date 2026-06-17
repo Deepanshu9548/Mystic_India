@@ -1,0 +1,251 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 40 38% 98%;
+    --foreground: 30 10% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 30 10% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 30 10% 15%;
+
+    --primary: 24 90% 55%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 40 30% 96%;
+    --secondary-foreground: 30 10% 15%;
+
+    --muted: 40 30% 96%;
+    --muted-foreground: 30 5% 45%;
+
+    --accent: 199 80% 94%;
+    --accent-foreground: 210 50% 30%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 30 20% 90%;
+    --input: 30 20% 90%;
+    --ring: 24 90% 55%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 260 20% 11%;
+    --foreground: 270 20% 90%;
+
+    --card: 260 20% 15%;
+    --card-foreground: 270 20% 90%;
+
+    --popover: 260 20% 15%;
+    --popover-foreground: 270 20% 90%;
+
+    --primary: 267 75% 80%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 260 20% 20%;
+    --secondary-foreground: 270 20% 90%;
+
+    --muted: 260 20% 20%;
+    --muted-foreground: 270 20% 70%;
+
+    --accent: 267 40% 30%;
+    --accent-foreground: 267 80% 90%;
+
+    --destructive: 0 74% 42%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 260 20% 30%;
+    --input: 260 20% 30%;
+    --ring: 267 75% 80%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    overflow-x: hidden;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  .light body {
+    @apply bg-texture-light;
+  }
+
+  .dark body {
+    background-image: url("https://www.transparenttextures.com/patterns/dark-wood.png");
+    @apply bg-background;
+  }
+
+  h1, h2, h3, h4, h5 {
+    @apply font-serif;
+  }
+
+  ::-webkit-scrollbar {
+    @apply w-1.5;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-secondary;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-mystic-300 rounded-full transition-colors dark:bg-primary;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-mystic-400 dark:bg-primary/90;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-sm;
+  }
+
+  .dark .glass-panel {
+    @apply bg-black/40 backdrop-blur-md border border-white/10 shadow-md;
+  }
+
+  .section-title {
+    @apply text-3xl md:text-4xl lg:text-5xl font-serif font-medium relative inline-block;
+  }
+
+  .section-title::after {
+    @apply content-[''] absolute -bottom-3 left-0 w-1/3 h-[3px] bg-spice-500;
+  }
+
+  .subtitle {
+    @apply text-sm font-medium uppercase tracking-wider text-spice-500;
+  }
+
+  .btn-primary {
+    @apply px-6 py-3 bg-spice-500 text-white rounded-md font-medium transition-all 
+           hover:bg-spice-600 hover:shadow-lg hover:-translate-y-1 active:translate-y-0 active:shadow-md;
+  }
+
+  .btn-outline {
+    @apply px-6 py-3 border border-mystic-300 rounded-md font-medium transition-all
+           hover:bg-mystic-50 hover:border-mystic-400 hover:shadow-sm;
+  }
+
+  .dark .btn-outline {
+    @apply border-mystic-700 hover:bg-mystic-800;
+  }
+
+  .nav-item {
+    @apply relative px-3 py-2 text-foreground/80 font-medium transition-colors hover:text-foreground before:absolute
+           before:bottom-0 before:left-0 before:h-[2px] before:w-0 before:bg-spice-500 before:transition-all hover:before:w-full;
+  }
+
+  .image-card {
+    @apply relative overflow-hidden rounded-md;
+  }
+
+  .image-card img {
+    @apply transition-transform duration-700 ease-in-out;
+  }
+
+  .image-card:hover img {
+    @apply scale-110;
+  }
+
+  /* Enhanced Animation Classes */
+  .hover-lift {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-lg;
+  }
+
+  .hover-expand {
+    @apply transition-all duration-300 hover:scale-105;
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-spice-500 to-indigo-500 bg-clip-text text-transparent;
+  }
+
+  .bg-pattern {
+    @apply bg-repeat opacity-10 pointer-events-none;
+    background-image: url("https://www.transparenttextures.com/patterns/oriental-tiles.png");
+  }
+
+  .dark .search-box {
+    @apply bg-mystic-800 border-mystic-700 text-foreground placeholder:text-foreground/50;
+  }
+
+  .search-box {
+    @apply bg-white border border-mystic-200 px-4 py-2 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-spice-400 transition-all;
+  }
+
+  .filter-container {
+    @apply flex flex-wrap gap-2 mb-6;
+  }
+
+  .filter-tag {
+    @apply px-3 py-1 text-sm rounded-full border border-mystic-200 hover:bg-spice-50 hover:border-spice-300 cursor-pointer transition-colors;
+  }
+
+  .dark .filter-tag {
+    @apply border-mystic-700 hover:bg-spice-900 hover:border-spice-700;
+  }
+
+  .filter-tag.active {
+    @apply bg-spice-500 border-spice-500 text-white hover:bg-spice-600;
+  }
+
+  .dark .filter-tag.active {
+    @apply bg-spice-600 border-spice-600;
+  }
+
+  .animate-delay-100 {
+    animation-delay: 100ms;
+  }
+  
+  .animate-delay-200 {
+    animation-delay: 200ms;
+  }
+  
+  .animate-delay-300 {
+    animation-delay: 300ms;
+  }
+  
+  .animate-delay-400 {
+    animation-delay: 400ms;
+  }
+  
+  .animate-delay-500 {
+    animation-delay: 500ms;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    /* For Chrome, Safari and Opera */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .snap-x {
+    scroll-snap-type: x mandatory;
+  }
+  
+  .snap-start {
+    scroll-snap-align: start;
+  }
+}
